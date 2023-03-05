@@ -12,6 +12,7 @@ import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
 import Admin from './pages/Admin/Admin';
 import NotFound from './pages/NotFound/NotFound';
+import Empty from './pages/Empty/Empty';
 
 import Loader from './components/Loader/Loader';
 
@@ -48,6 +49,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/users" component={Users} />
           <Route path="/notfound" component={NotFound} />
           <Route path="/admin" component={Admin} />
+          <Route path="/empty" component={Empty} />
           <Route exact path="/:username" component={Profile} />
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />

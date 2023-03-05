@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-content">
         <span className="username">@hojin</span>
         <iframe
-          src="https://github.com/solone313/nomadbook"
+          src="https://ghbtns.com/github-btn.html?user=nemanjam&repo=mern-boilerplate&type=star&count=true&size=large"
           frameBorder="0"
           scrolling="0"
           width="160px"
