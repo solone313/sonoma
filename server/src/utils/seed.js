@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import User from '../models/User';
 import Message from '../models/Message';
+import Reciept from '../models/Reciept';
 import { deleteAllAvatars } from './utils';
 import { IMAGES_FOLDER_PATH } from './constants';
 
@@ -11,6 +12,7 @@ export const seedDb = async () => {
 
   await User.deleteMany({});
   await Message.deleteMany({});
+  await Reciept.deleteMany({});
   await deleteAllAvatars(join(__dirname, '../..', IMAGES_FOLDER_PATH));
 
   // create 3 users
@@ -54,8 +56,51 @@ export const seedDb = async () => {
     }),
   );
 
+  // create 9 messages
+  const recieptPromises = [...Array(2).keys()].map((index, i) => {
+    const reciept = new Reciept({
+      customer_name: "테스트거래처"+i,
+      manager: "테스트관리자",
+      contact: "테스트연락처",
+      product_name: "테스트제품명",
+      standard: "테스트기준",
+      quantity: "테스트수량",
+      due_date: Date.now(),
+      bow_number: "테스트절수",
+      memo1: "테스트 중요메모",
+      memo2: "테스트 주문메모",
+      binding_method: "테스트 제본 방법",
+      gwidori: "테스트 귀도리",
+      ribbon: "테스트 리본",
+      gild_edge: "테스트 금장",
+      shrink_wrap: "테스트 포장",
+      ct: "테스트 ct",
+      barcode: Math.random().toString(36).substring(2, 11),
+      composition: [
+        {
+          description: "면지",
+          paper: "테스트 용지",
+          page: 7,
+          memo: "테스트 비고"
+        },
+      ],
+      processType: [
+        "재단",
+        "접지",
+      ]
+    });
+    return reciept;
+  });
+
+  await Promise.all(
+    recieptPromises.map(async (reciept) => {
+      await reciept.save();
+    }),
+  );
+
   const users = await User.find();
   const messages = await Message.find();
+  const reciepts = await Reciept.find();
 
   // every user 3 messages
   users.map(async (user, index) => {
@@ -69,6 +114,20 @@ export const seedDb = async () => {
     const user = users[j];
     await Message.updateOne(
       { _id: message.id },
+      {
+        $set: {
+          user: user.id,
+        },
+      },
+    );
+  });
+
+  // 0,1,2 message belong to user 0 ...
+  reciepts.map(async (reciept, index) => {
+    const j = Math.floor(index / 3);
+    const user = users[j];
+    await Reciept.updateOne(
+      { _id: reciept.id },
       {
         $set: {
           user: user.id,

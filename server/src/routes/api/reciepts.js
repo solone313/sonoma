@@ -1,19 +1,20 @@
 import { Router } from 'express';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
-import Message, { validateMessage } from '../../models/Message';
+import Reciept, { validateMessage } from '../../models/Reciept';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const messages = await Message.find().sort({ createdAt: 'desc' }).populate('user');
+    const reciepts = await Reciept.find().sort({ createdAt: 'desc' }).populate('user');
 
     res.json({
-      messages: messages.map((m) => {
+        reciepts: reciepts.map((m) => {
         return m.toJSON();
       }),
     });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: 'Something went wrong.' });
   }
 });
@@ -24,7 +25,6 @@ router.get('/:id', async (req, res) => {
     if (!message) return res.status(404).json({ message: 'No message found.' });
     res.json({ message: message.toJSON() });
   } catch (err) {
-    console.log(err, "sadlknd")
     res.status(500).json({ message: 'Something went wrong.' });
   }
 });
