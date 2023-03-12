@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import usersRoutes from './users';
 import messagesRoutes from './messages';
-import recieptsRoutes from './reciepts';
+import recieptsRoutes from './reciept';
 const router = Router();
 
 router.use('/users', usersRoutes);

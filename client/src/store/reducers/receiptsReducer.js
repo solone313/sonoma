@@ -1,11 +1,11 @@
 import {
-  GET_RECIEPT_LOADING,
-  GET_RECIEPT_SUCCESS,
-  GET_RECIEPT_FAIL,
+  GET_RECIEPTS_LOADING,
+  GET_RECIEPTS_SUCCESS,
+  GET_RECIEPTS_FAIL,
 } from '../types';
 
 const initialState = {
-  reciept: {},
+  reciepts: [],
   isLoading: false,
   error: null,
 };
@@ -14,18 +14,18 @@ const initialState = {
 
 export default function (state = initialState, { type, payload }) {
   switch (type) {
-    case GET_RECIEPT_LOADING:
+    case GET_RECIEPTS_LOADING:
       return {
         ...state,
         isLoading: true,
       };
-    case GET_RECIEPT_SUCCESS:
+    case GET_RECIEPTS_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        reciept: payload.reciept,
+        reciepts: payload.reciepts,
       };
-    case GET_RECIEPT_FAIL:
+    case GET_RECIEPTS_FAIL:
       return {
         ...state,
         isLoading: false,

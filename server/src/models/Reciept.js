@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const recieptSchema = new Schema(
   {
     // 거래처명
-    customer_name: {
+    customerName: {
       type: String,
       required: true,
     },
@@ -18,7 +18,7 @@ const recieptSchema = new Schema(
         type: String,
     },
     // 제품명
-    product_name: {
+    productName: {
         type: String,
     },
     // 규격
@@ -30,11 +30,11 @@ const recieptSchema = new Schema(
         type: String,
     },
     // 납기일
-    due_date: {
+    dueDate: {
         type: Date,
     },
     // 절수
-    bow_number: {
+    bowNumber: {
         type: String,
     },
     // 중요메모
@@ -46,7 +46,7 @@ const recieptSchema = new Schema(
         type: String,
     },
     // 제본방법
-    binding_method: {
+    bindingMethod: {
         type: String,
     },
     // 귀도리
@@ -58,11 +58,11 @@ const recieptSchema = new Schema(
         type: String,
     },
     // 금장
-    gild_edge: {
+    gildEdge: {
         type: String,
     },
     // 포장
-    shrink_wrap: {
+    shrinkWrap: {
         type: String,
     },
     // C/T
@@ -84,6 +84,11 @@ const recieptSchema = new Schema(
         // 비고
         memo: String,
     }],
+    // 현재 공정
+    currentProcess: {
+        type: Number,
+       
+    },
     // 공정과정
     processType: [{
         type: String,
@@ -97,25 +102,32 @@ const recieptSchema = new Schema(
 recieptSchema.methods.toJSON = function () {
   return {
     id: this._id,
-    customer_name: this.customer_name,
+    customerName: this.customerName,
     manager: this.manager,
     contact: this.contact,
-    product_name: this.product_name,
+    productName: this.productName,
     standard: this.standard,
     quantity: this.quantity,
-    due_date: this.due_date,
-    bow_number: this.bow_number,
+    dueDate: this.dueDate,
+    bowNumber: this.bowNumber,
     memo1: this.memo1,
     memo2: this.memo2,
-    binding_method: this.binding_method,
+    bindingMethod: this.bindingMethod,
     gwidori: this.gwidori,
     ribbon: this.ribbon,
-    gild_edge: this.gild_edge,
-    shrink_wrap: this.shrink_wrap,
+    gildEdge: this.gildEdge,
+    shrinkWrap: this.shrinkWrap,
     ct: this.ct,
     barcode: this.barcode,
     composition: this.composition,
+    currentProcess: this.currentProcess,
     processType: this.processType,
+    createdAt: this.createdAt.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    }),
+    updatedAt: this.updatedAt,
     user: this.user.toJSON(),
   };
 };

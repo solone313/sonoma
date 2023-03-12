@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const message = await Message.findById(req.params.id).populate('user');
-    if (!message) return res.status(404).json({ message: 'No message found.' });
-    res.json({ message: message.toJSON() });
+    const reciept = await Reciept.findById(req.params.id);
+    if (!reciept) return res.status(404).json({ message: 'No message found.' });
+    res.json({ reciept: reciept.toJSON() });
   } catch (err) {
     res.status(500).json({ message: 'Something went wrong.' });
   }

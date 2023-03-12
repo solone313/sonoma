@@ -59,21 +59,21 @@ export const seedDb = async () => {
   // create 9 messages
   const recieptPromises = [...Array(2).keys()].map((index, i) => {
     const reciept = new Reciept({
-      customer_name: "테스트거래처"+i,
+      customerName: "테스트거래처"+i,
       manager: "테스트관리자",
       contact: "테스트연락처",
-      product_name: "테스트제품명",
+      productName: "테스트제품명",
       standard: "테스트기준",
       quantity: "테스트수량",
-      due_date: Date.now(),
-      bow_number: "테스트절수",
+      dueDate: Date.now(),
+      bowNumber: "테스트절수",
       memo1: "테스트 중요메모",
       memo2: "테스트 주문메모",
-      binding_method: "테스트 제본 방법",
+      bindingMethod: "테스트 제본 방법",
       gwidori: "테스트 귀도리",
       ribbon: "테스트 리본",
-      gild_edge: "테스트 금장",
-      shrink_wrap: "테스트 포장",
+      gildEdge: "테스트 금장",
+      shrinkWrap: "테스트 포장",
       ct: "테스트 ct",
       barcode: Math.random().toString(36).substring(2, 11),
       composition: [
@@ -83,11 +83,21 @@ export const seedDb = async () => {
           page: 7,
           memo: "테스트 비고"
         },
+        {
+          description: "화보",
+          paper: "테스트 화보",
+          page: 40,
+          memo: "테스트 비고"
+        },
+        {
+          description: "본문",
+          paper: "테스트 본문",
+          page: 150,
+          memo: "테스트 비고"
+        },
       ],
-      processType: [
-        "재단",
-        "접지",
-      ]
+      currentProcess: 4,
+      processType: ['재단','접지','노리','정합','사철','가다미','삼면재단','성책','후가공1','후가공2','후가공3'],
     });
     return reciept;
   });
