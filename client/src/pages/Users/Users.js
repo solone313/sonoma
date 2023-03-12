@@ -1,73 +1,122 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-
+import NavBar from '../../components/Navbar/Navbar';
 import { getUsers } from '../../store/actions/usersActions';
 import Layout from '../../layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
+import { Table, Input, Select, Button, Row, Col} from 'antd';
 
 import './styles.css';
 
+const { Option } = Select;
 const Users = ({ getUsers, users: { users, isLoading } }) => {
   useEffect(() => {
     getUsers();
   }, []);
-
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: 'odd',
+        text: 'Select Odd Row',
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return false;
+            }
+            return true;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      }
+    ]
+  }
+  const columns = [
+    {
+      title: 'PROVIDER',
+      dataIndex: 'provider',
+      key: 'provider',
+    },
+    {
+      title: 'ROLE',
+      dataIndex: 'role',
+      key: 'role',
+    },
+    {
+      title: 'NAME',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'USERNAME',
+      dataIndex: 'username',
+      key: 'id',
+    },   
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'TIME',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
+  ];
+  
+  
+  const [showNavBar, setShowNavBar] = useState(false);
   return (
     <Layout>
-      <div className="users">
-        <h1>Users page</h1>
-        <p>
-          This is the Users page. Here are listed all of the users of the app. Click the avatar or
-          the username link to go to user's profile. Only authenticated users can see this page.
-        </p>
+      <div className="users">    
+      <div>
+          {showNavBar && <NavBar />}
+        </div>
+      <Row gutter={16}>
+        <Row justify="start" style={{ width: '50%' }}> 
+          <Input.Group compact>
+            <Col>
+            <Select defaultValue="Zhejiang">
+              <Option value="Zhejiang">Zhejiang</Option>
+              <Option value="Jiangsu">Jiangsu</Option>
+            </Select>
+            <Input
+              style={{
+                width: '50%',
+              }}
+              defaultValue="Xihu District, Hangzhou"
+            />  
+              <Button type="primary">버튼</Button>
+            </Col>
+          </Input.Group>
+        </Row>
+        <Row justify="end" style={{ width: '50%' }}>
+            <Col>
+              <Button type="primary">버튼</Button>
+            </Col>
+        </Row>
+        </Row>
+        <h1>회원목록</h1>
         <div className="list">
           {isLoading ? (
             <Loader />
           ) : (
             <>
-              {users.map((user, index) => {
-                return (
-                  <div key={index} className="profile">
-                    <Link to={`/${user.username}`}>
-                      <img src={user.avatar} className="avatar" />
-                    </Link>
-                    <div className="info-container">
-                      <div>
-                        <span className="label">Provider: </span>
-                        <span className="info">{user.provider}</span>
-                      </div>
-                      <div>
-                        <span className="label">Role: </span>
-                        <span className="info">{user.role}</span>
-                      </div>
-                      <div>
-                        <span className="label">Name: </span>
-                        <span className="info">{user.name}</span>
-                      </div>
-                      <div>
-                        <span className="label">Username: </span>
-                        <Link to={`/${user.username}`} className="info bold profile-link">
-                          {user.username}
-                        </Link>
-                      </div>
-                      <div>
-                        <span className="label">Email: </span>
-                        <span className="info">{user.email}</span>
-                      </div>
-                      <div>
-                        <span className="label">Joined: </span>
-                        <span className="info">
-                          {moment(user.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+             <Table rowKey={'id'} rowSelection={rowSelection} columns={columns} dataSource={users} />
             </>
           )}
         </div>
