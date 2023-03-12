@@ -60,7 +60,7 @@ Rename `.env.example` to `.env` and fill in database connection strings, Google 
 
 ```
 #db
-MONGO_URI_DEV=mongodb://localhost:27017/mernboilerplate
+MONGO_URI_DEV=://localhost:27017/mernboilerplate
 MONGO_URI_PROD=
 
 #google

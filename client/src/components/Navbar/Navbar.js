@@ -1,10 +1,11 @@
-import React from 'react';
+import React ,{useState, }from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-
+import Users from '../../pages/Users/Users';
 import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
+import { Col, Row } from 'antd';
 
 const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = (event) => {
@@ -12,6 +13,8 @@ const Navbar = ({ auth, logOutUser, history }) => {
     logOutUser(history);
   };
 
+  
+  
   return (
     <nav className="navbar">
       <h2 className="logo">SONOMA</h2>
@@ -22,7 +25,8 @@ const Navbar = ({ auth, logOutUser, history }) => {
         {auth.isAuthenticated ? (
           <>
             <li className="nav-item">
-              <Link to="/users">멤버관리</Link>
+              <Link to="/users" onClick={Users.handleClick}>멤버관리</Link>
+          
             </li>
             <li className="nav-item">
               <Link to="/empty">세팅관리</Link>
