@@ -39,7 +39,7 @@ export const loadMe = () => async (dispatch, getState) => {
 export const loginUserWithEmail = (formData, history) => async (dispatch, getState) => {
   dispatch({ type: LOGIN_WITH_EMAIL_LOADING });
   try {
-    const response = await axios.post('/auth/login', formData);
+    const response = await axios.post('api/auth/login', formData);
 
     dispatch({
       type: LOGIN_WITH_EMAIL_SUCCESS,
@@ -84,7 +84,7 @@ export const logOutUser = (history) => async (dispatch) => {
   try {
     deleteAllCookies();
     //just to log user logut on the server
-    await axios.get('/auth/logout');
+    await axios.get('api/auth/logout');
 
     dispatch({
       type: LOGOUT_SUCCESS,

@@ -8,6 +8,7 @@ client/build
 
 **/.env*
 !**/.env*.example
+*.pem
 
 # ignore mongo data
 !server/docker/mongo-data
