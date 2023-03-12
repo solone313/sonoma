@@ -13,6 +13,8 @@ import Users from './pages/Users/Users';
 import Admin from './pages/Admin/Admin';
 import NotFound from './pages/NotFound/NotFound';
 import Empty from './pages/Empty/Empty';
+import Reciepts from './pages/Reciepts/Reciepts';
+import Reciept from './pages/Reciept/Reciept';
 
 import Loader from './components/Loader/Loader';
 
@@ -50,6 +52,8 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/notfound" component={NotFound} />
           <Route path="/admin" component={Admin} />
           <Route path="/empty" component={Empty} />
+          <Route exact path="/reciepts" component={Reciepts} />
+          <Route exact path="/reciepts/:id" component={Reciept} />
           <Route exact path="/:username" component={Profile} />
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />

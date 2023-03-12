@@ -32,7 +32,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
               <Link to="/empty">세팅관리</Link>
             </li>
             <li className="nav-item">
-              <Link to="/empty">접수관리</Link>
+              <Link to="/reciepts">접수관리</Link>
             </li>
             <li className="nav-item">
               <Link to="/empty">접수통계</Link>
